@@ -9,6 +9,15 @@ function Card(data) {
     context.openProductDetail();
     context.setProductToShow(ProductDetail);
   }
+
+  const addProductsToCart = (event, productData) => {
+    event.stopPropagation();
+    context.setCount(context.count + 1);
+    context.setCartProducts([...context.cartProducts, productData])
+    context.openCheckoutSideMenu();
+    context.closeProductDetail();
+  }
+
   return (
     <div 
     className="bg-white cursor-pointer w-56 h-60 rounded-lg"
@@ -17,7 +26,7 @@ function Card(data) {
             <span className="absolute bottom-0 left-0 m-2 bg-white/60 rounded-lg text-black text-xs px-3 py-0.5">{data.data.name}</span>
             <img className="w-full h-full object-cover rounded-lg" src={data.data.image} alt={data.data.title} />
             <div className="absolute top-0 m-2 right-0 flex justify-center items-center bg-white w-6 h-6 rounded-full p-1"
-            onClick={() => context.setCount(context.count + 1)}>
+            onClick={(event) => addProductsToCart(event, data.data)}>
                 <PlusIcon className='w-6 h-6 text-black'></PlusIcon>
             </div>
         </figure>
